@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-code-generator
+  labels:
+    app: ai-code-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-code-generator
+  template:
+    metadata:
+      labels:
+        app: ai-code-generator
+    spec:
+      containers:
+      - name: ai-code-generator
+        image: s4e-ai-code-generator:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ai-code-generator-secrets
+              key: gemini-api-key
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-code-generator
+spec:
+  selector:
+    app: ai-code-generator
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-code-generator-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ai-code-generator
+            port:
+              number: 80

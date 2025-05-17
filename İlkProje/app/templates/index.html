@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapay Zeka Destekli Kod Üretici</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/python.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Yapay Zeka Destekli Kod Üretici</h1>
+            <p>Job sınıfını genişleten Python kodu üretmek için bir istek girin</p>
+        </header>
+
+        <main>
+            <section class="prompt-section">
+                <form id="prompt-form">
+                    <div class="form-group">
+                        <label for="prompt">İsteğiniz:</label>
+                        <textarea id="prompt" name="prompt" rows="5" placeholder="Üretmek istediğiniz kodu tanımlayın..."></textarea>
+                    </div>
+                    <button type="submit" id="generate-btn">Kod Üret</button>
+                </form>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Kod üretiliyor...</p>
+                </div>
+            </section>
+
+            <section class="result-section" id="result-section">
+                <div class="result-header">
+                    <h2 id="code-title">Üretilen Kod</h2>
+                    <button id="copy-btn">Kodu Kopyala</button>
+                </div>
+                <pre><code class="language-python" id="code-output"></code></pre>
+            </section>
+        </main>
+
+        <footer>
+            <p>DevOps Stajyer Görevi - Yapay Zeka Destekli Kod Üretici</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
