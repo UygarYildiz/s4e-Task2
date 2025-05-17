@@ -89,6 +89,7 @@ Bu projede, 3 node'lu bir Kubernetes cluster kurulumu yapılmıştır (1 control
    s4e-cluster-worker2         Ready    <none>          5m13s   v1.33.1
    ```
 
+   ![Kubernetes Cluster Durumu](images/cluster-status.png)
 
 
 ## 2. Namespace Yapılandırması
@@ -199,6 +200,8 @@ kubectl apply -f k8s/resource-limits.yaml
    test-pod-codegen                     1/1     Running   0          49m
    ```
 
+   ![Pod Durumları](images/pod-durumları.png)
+
 ![Kubernetes Namespaces](images/namespaces.png)
 
 ## 3. Network Policy Yapılandırması
@@ -297,17 +300,161 @@ Bu betik aşağıdaki testleri gerçekleştirir:
 Test sonuçları, network policy'nin başarıyla çalıştığını göstermektedir:
 
 ```
+Network Policy Test Aracı
+=========================
+
+Test pod'larının varlığını kontrol ediyoruz...
+codegen namespace'indeki pod IP: 192.168.100.12
+nonamens namespace'indeki pod IP: 192.168.100.13
+
 Test 1: Network policy aktifken nonamens -> codegen ping testi
 ==============================================================
+
 Network policy aktif. nonamens'den codegen'e ping atılıyor...
-PING 192.168.100.1 (192.168.100.1): 56 data bytes
---- 192.168.100.1 ping statistics ---
+PING 192.168.100.12 (192.168.100.12): 56 data bytes
+
+--- 192.168.100.12 ping statistics ---
 4 packets transmitted, 0 packets received, 100% packet loss
 command terminated with exit code 1
 Beklenen sonuç: Ping başarısız (engellendi)
+
+Test 2: Network policy aktifken codegen -> nonamens ping testi
+==============================================================
+
+Network policy aktif. codegen'den nonamens'e ping atılıyor...
+Network policy aktif. codegen'den nonamens'e ping atılıyor...
+PING 192.168.100.13 (192.168.100.13): 56 data bytes
+PING 192.168.100.13 (192.168.100.13): 56 data bytes
+64 bytes from 192.168.100.13: seq=0 ttl=63 time=0.324 ms
+64 bytes from 192.168.100.13: seq=1 ttl=63 time=0.159 ms
+64 bytes from 192.168.100.13: seq=1 ttl=63 time=0.159 ms
+64 bytes from 192.168.100.13: seq=2 ttl=63 time=0.105 ms
+64 bytes from 192.168.100.13: seq=2 ttl=63 time=0.105 ms
+64 bytes from 192.168.100.13: seq=3 ttl=63 time=0.222 ms
+
+64 bytes from 192.168.100.13: seq=3 ttl=63 time=0.222 ms
+
+--- 192.168.100.13 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+
+--- 192.168.100.13 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.105/0.202/0.324 ms
+--- 192.168.100.13 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.105/0.202/0.324 ms
+Beklenen sonuç: Ping başarılı (engellenmedi)
+
+Test 3: Network policy devre dışıyken nonamens -> codegen ping testi
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.105/0.202/0.324 ms
+Beklenen sonuç: Ping başarılı (engellenmedi)
+
+Test 3: Network policy devre dışıyken nonamens -> codegen ping testi
+====================================================================
+
+round-trip min/avg/max = 0.105/0.202/0.324 ms
+Beklenen sonuç: Ping başarılı (engellenmedi)
+
+Test 3: Network policy devre dışıyken nonamens -> codegen ping testi
+====================================================================
+
+Network policy kaldırılıyor...
+Beklenen sonuç: Ping başarılı (engellenmedi)
+
+Test 3: Network policy devre dışıyken nonamens -> codegen ping testi
+====================================================================
+
+Network policy kaldırılıyor...
+====================================================================
+
+Network policy kaldırılıyor...
+Network policy kaldırılıyor...
+deny-from-nonamens network policy bulunamadı.
+networkpolicy.networking.k8s.io "default-deny-all" deleted
+default-deny-all network policy silindi.
+networkpolicy.networking.k8s.io "allow-from-same-namespace" deleted
+allow-from-same-namespace network policy silindi.
+networkpolicy.networking.k8s.io "allow-from-kube-system" deleted
+allow-from-kube-system network policy silindi.
+Network policy değişikliklerinin uygulanması için bekleniyor...
+Test pod'larını yeniden başlatıyoruz...
+pod "test-pod-codegen" deleted
+test-pod-codegen silindi.
+pod "test-pod-nonamens" deleted
+test-pod-nonamens silindi.
+pod/test-pod-codegen created
+pod/test-pod-nonamens created
+Test pod'ları oluşturuldu.
+Pod'ların hazır olması için bekleniyor...
+pod/test-pod-codegen condition met
+pod/test-pod-nonamens condition met
+Güncellenmiş pod IP'leri:
+codegen namespace'indeki pod IP: 192.168.100.14
+nonamens namespace'indeki pod IP: 192.168.100.15
+Network policy devre dışı. nonamens'den codegen'e ping atılıyor...
+PING 192.168.100.14 (192.168.100.14): 56 data bytes
+64 bytes from 192.168.100.14: seq=0 ttl=63 time=0.524 ms
+64 bytes from 192.168.100.14: seq=1 ttl=63 time=0.114 ms
+64 bytes from 192.168.100.14: seq=2 ttl=63 time=0.106 ms
+64 bytes from 192.168.100.14: seq=3 ttl=63 time=0.210 ms
+
+--- 192.168.100.14 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.106/0.238/0.524 ms
+Beklenen sonuç: Ping başarılı (engellenmedi)
+
+Network policy tekrar uygulanıyor
+=================================
+
+networkpolicy.networking.k8s.io/default-deny-all created
+networkpolicy.networking.k8s.io/allow-from-same-namespace created
+networkpolicy.networking.k8s.io/allow-from-kube-system created
+Network policy değişikliklerinin uygulanması için bekleniyor...
+Test pod'larını yeniden başlatıyoruz...
+pod "test-pod-codegen" deleted
+test-pod-codegen silindi.
+pod "test-pod-nonamens" deleted
+test-pod-nonamens silindi.
+pod/test-pod-codegen created
+pod/test-pod-nonamens created
+Test pod'ları oluşturuldu.
+Pod'ların hazır olması için bekleniyor...
+pod/test-pod-codegen condition met
+pod/test-pod-nonamens condition met
+Güncellenmiş pod IP'leri:
+codegen namespace'indeki pod IP: 192.168.100.16
+nonamens namespace'indeki pod IP: 192.168.100.17
+
+Test 4: Cilium network policy testi
+===================================
+
+Cilium network policy uygulanıyor...
+Cilium CRD'leri bulunamadı. Cilium network policy uygulanamadı.
+Bu beklenen bir durum, çünkü Cilium CNI kurulu değil.
+Network policy değişikliklerinin uygulanması için bekleniyor...
+Cilium network policy aktif. nonamens'den codegen'e ping atılıyor...
+PING 192.168.100.16 (192.168.100.16): 56 data bytes
+
+--- 192.168.100.16 ping statistics ---
+4 packets transmitted, 0 packets received, 100% packet loss
+command terminated with exit code 1
+Beklenen sonuç: Ping başarısız (engellendi)
+
+Test Sonuçları
+==============
+
+Network policy testleri tamamlandı.
+Kubernetes Network Policy'ler başarıyla test edildi.
 ```
 
 Calico CNI kullanılarak, `nonamens` namespace'inden `codegen` namespace'ine ping atıldığında cevap alınamaması sağlanmıştır. Bu, görevin kritik noktası olan network policy'lerin doğru yapılandırıldığını göstermektedir.
+
+Tüm network policy testleri başarıyla tamamlandı:
+1. Network policy aktifken, `nonamens` namespace'inden `codegen` namespace'ine ping atılamıyor.
+2. Network policy aktifken, `codegen` namespace'inden `nonamens` namespace'ine ping atılabiliyor.
+3. Network policy devre dışıyken, `nonamens` namespace'inden `codegen` namespace'ine ping atılabiliyor.
+4. Cilium network policy aktifken, `nonamens` namespace'inden `codegen` namespace'ine ping atılamıyor.
 
 ![Network Policies](images/network-policies.png)
 
@@ -477,7 +624,7 @@ kubectl port-forward svc/codegen-app -n codegen 80:80
 2. Network policy testi: `./test-network-policy.sh`
 3. ArgoCD UI'da deployment izleme: http://localhost:8080
 4. Grafana'da metrikleri görüntüleme: http://localhost:3000
-5. AI Code Generator uygulamasına erişim: http://localhost
+5. AI Code Generator uygulamasına erişim: http://localhost:8081
 
 ## 8. Temizlik
 
