@@ -655,4 +655,4 @@ Bu projede:
 
 Bu proje, modern DevOps yaklaşımlarını ve Kubernetes'in güvenlik özelliklerini göstermektedir. Özellikle, görevin kritik noktaları olan Helm chart kullanımı ve network policy'lerin doğru yapılandırılması başarıyla tamamlanmıştır.
 
-![Kubernetes Architecture](https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg)
+![Kubernetes Architecture](images/kubernetes-architecture.png)
