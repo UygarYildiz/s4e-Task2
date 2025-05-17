@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-codegen
+  namespace: codegen
+  labels:
+    app: test-pod
+spec:
+  containers:
+  - name: busybox
+    image: busybox:latest
+    command: ["sleep", "3600"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-nonamens
+  namespace: nonamens
+  labels:
+    app: test-pod
+spec:
+  containers:
+  - name: busybox
+    image: busybox:latest
+    command: ["sleep", "3600"]

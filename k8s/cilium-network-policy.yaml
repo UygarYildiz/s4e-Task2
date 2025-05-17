@@ -1,0 +1,14 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-from-nonamens
+  namespace: codegen
+spec:
+  endpointSelector: {}  # Tüm podlara uygulanır
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        "k8s:io.kubernetes.pod.namespace": "!nonamens"
+  - fromEntities:
+    - cluster
+    - host

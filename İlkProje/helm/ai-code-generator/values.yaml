@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: s4e-ai-code-generator
   tag: latest
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP

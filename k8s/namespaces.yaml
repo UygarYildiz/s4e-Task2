@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: codegen
+  labels:
+    name: codegen
+    environment: development
+    app: ai-code-generator
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nonamens
+  labels:
+    name: nonamens
+    environment: development
+    app: example-app

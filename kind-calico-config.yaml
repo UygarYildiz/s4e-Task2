@@ -1,0 +1,27 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: s4e-cluster
+networking:
+  # Disable default CNI and use Calico instead
+  disableDefaultCNI: true
+  # Set pod CIDR
+  podSubnet: "192.168.0.0/16"
+  # Set service CIDR
+  serviceSubnet: "10.96.0.0/12"
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    protocol: TCP
+- role: worker
+- role: worker
