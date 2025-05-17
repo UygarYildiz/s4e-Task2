@@ -2,7 +2,7 @@
 
 Bu proje, S4E şirketinin DevOps Stajyer pozisyonu için mülakat görevidir. Modern DevOps yaklaşımları kullanılarak Kubernetes cluster kurulumu, namespace yapılandırması, network policy uygulaması ve CI/CD entegrasyonu içermektedir.
 
-![Kubernetes Logo](https://kubernetes.io/images/kubernetes-horizontal-color.png)
+![Kubernetes Logo](images/kubernetes-logo.png)
 
 ## Proje Özeti
 
@@ -199,7 +199,7 @@ kubectl apply -f k8s/resource-limits.yaml
    test-pod-codegen                     1/1     Running   0          49m
    ```
 
-![Kubernetes Namespaces](https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/images/docs/admin/namespaces.svg)
+![Kubernetes Namespaces](images/namespaces.png)
 
 ## 3. Network Policy Yapılandırması
 
@@ -309,7 +309,7 @@ Beklenen sonuç: Ping başarısız (engellendi)
 
 Calico CNI kullanılarak, `nonamens` namespace'inden `codegen` namespace'ine ping atıldığında cevap alınamaması sağlanmıştır. Bu, görevin kritik noktası olan network policy'lerin doğru yapılandırıldığını göstermektedir.
 
-![Network Policies](https://d33wubrfki0l68.cloudfront.net/a411b8670e47e95c9838c3e7d0a89f946d9e3823/c1ea6/images/docs/network-policy.png)
+![Network Policies](images/network-policies.png)
 
 ## 4. Helm Chart ile Uygulama Dağıtımı
 
