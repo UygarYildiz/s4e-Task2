@@ -2,7 +2,7 @@
 
 Bu proje, S4E şirketinin DevOps Stajyer pozisyonu için mülakat görevidir. Modern DevOps yaklaşımları kullanılarak Kubernetes cluster kurulumu, namespace yapılandırması, network policy uygulaması ve CI/CD entegrasyonu içermektedir.
 
-![Kubernetes Logo](images/kubernetes-logo.png)
+![Kubernetes Logo](images/kubernetes.png)
 
 ## Proje Özeti
 
@@ -89,7 +89,7 @@ Bu projede, 3 node'lu bir Kubernetes cluster kurulumu yapılmıştır (1 control
    s4e-cluster-worker2         Ready    <none>          5m13s   v1.33.1
    ```
 
-![Kubernetes Cluster](https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png)
+
 
 ## 2. Namespace Yapılandırması
 
