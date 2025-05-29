@@ -1,6 +1,3 @@
-# DevOps Stajyer Adayı Görevi - Kubernetes Network Policies
-
-Bu proje, S4E şirketinin DevOps Stajyer pozisyonu için mülakat görevidir. Modern DevOps yaklaşımları kullanılarak Kubernetes cluster kurulumu, namespace yapılandırması, network policy uygulaması ve CI/CD entegrasyonu içermektedir.
 
 > **Not**: Bu projede deploy edilen AI Code Generator uygulamasının GitHub repository'si: [https://github.com/UygarYildiz/s4e-Ai-code-Generator](https://github.com/UygarYildiz/s4e-Ai-code-Generator)
 
